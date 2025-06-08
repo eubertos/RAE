@@ -57,18 +57,65 @@ function scoreDesign(design) {
   return { score, harmony };
 }
 
-function mutateColor(hex) {
-  const rgb = hexToRgb(hex).map(v => Math.min(255, Math.max(0, v + (Math.random() * 20 - 10))));
-  return '#' + rgb.map(v => v.toString(16).padStart(2, '0')).join('');
+function rgbToHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let h, s, l = (max + min) / 2;
+  if (max === min) { h = s = 0; }
+  else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      default: h = (r - g) / d + 4; break;
+    }
+    h *= 60;
+  }
+  return [h, s, l];
+}
+
+function hslToRgb(h, s, l) {
+  h /= 360;
+  let r, g, b;
+  if (s === 0) {
+    r = g = b = l;
+  } else {
+    const hue2rgb = (p, q, t) => {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1 / 6) return p + (q - p) * 6 * t;
+      if (t < 1 / 2) return q;
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+      return p;
+    };
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    r = hue2rgb(p, q, h + 1 / 3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1 / 3);
+  }
+  return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+}
+
+function mutateColor(hex, baseHue) {
+  const [r, g, b] = hexToRgb(hex);
+  let [h, s, l] = rgbToHsl(r, g, b);
+  // Move hue toward baseHue for better harmony
+  const delta = (Math.random() * 20 - 10);
+  h = (baseHue + delta + 360) % 360;
+  const [nr, ng, nb] = hslToRgb(h, s, l);
+  return '#' + [nr, ng, nb].map(v => v.toString(16).padStart(2, '0')).join('');
 }
 
 function mutateDesign(design) {
+  const baseHue = hue(hexToRgb(design.colors.primary));
   return {
     ...design,
     colors: {
-      background: mutateColor(design.colors.background),
-      text: mutateColor(design.colors.text),
-      primary: mutateColor(design.colors.primary)
+      background: mutateColor(design.colors.background, baseHue),
+      text: mutateColor(design.colors.text, baseHue),
+      primary: mutateColor(design.colors.primary, baseHue)
     },
     whitespace: Math.min(0.4, Math.max(0.2, design.whitespace + (Math.random() * 0.1 - 0.05))),
     fontSize: Math.max(16, design.fontSize + Math.round(Math.random() * 2 - 1)),
@@ -98,7 +145,7 @@ if (require.main === module) {
     process.exit(1);
   }
   const design = JSON.parse(fs.readFileSync(input));
-  const refined = refine(design, 50);
+  const refined = refine(design, 200);
   fs.writeFileSync('refined_design.json', JSON.stringify(refined, null, 2));
   const { score, harmony } = scoreDesign(refined);
   console.log(`Refined score: ${score}, harmony: ${harmony.toFixed(2)}`);

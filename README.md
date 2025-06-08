@@ -101,4 +101,10 @@ Users will see an update prompt on next launch and can restart to apply it seaml
 
 ## UI Aesthetics Checklist
 
-The repository includes `docs/UI_Aesthetics_Criteria.md` describing deterministic metrics for visual quality. Use `node scripts/designRefinement.js design.json` to score and evolve a design file. The script writes `refined_design.json` with the highest scoring variant.
+The repository includes `docs/UI_Aesthetics_Criteria.md` describing deterministic metrics for visual quality. Start with a `design.json` file and run:
+
+```sh
+node scripts/designRefinement.js design.json
+```
+
+The script mutates the design and writes `refined_design.json`. Continue feeding the refined file back into the script until the console reports **`Refined score: 6`** (all checklist items) and a harmony above `0.8`.
