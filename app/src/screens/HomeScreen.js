@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, Button, Modal, ActivityIndicator, Pressable } from 'react-native';
+import * as Haptics from 'expo-haptics';
 import { AppContext } from '../context/AppContext';
 import { ProgressBar } from '../components/ProgressBar';
 
@@ -48,12 +49,26 @@ export default function HomeScreen({ navigation }) {
       )}
       <Button
         title="View Tasks"
-        onPress={() => navigation.navigate('Tasks')}
+        onPress={() => {
+          Haptics.selectionAsync();
+          navigation.navigate('Tasks');
+        }}
         accessibilityLabel="Go to tasks"
       />
       <Button
+        title="Mentor"
+        onPress={() => {
+          Haptics.selectionAsync();
+          navigation.navigate('Mentor');
+        }}
+        accessibilityLabel="Open Mentor assistant"
+      />
+      <Button
         title="Profile"
-        onPress={() => navigation.navigate('Profile')}
+        onPress={() => {
+          Haptics.selectionAsync();
+          navigation.navigate('Profile');
+        }}
         accessibilityLabel="Open profile screen"
       />
 
@@ -63,10 +78,25 @@ export default function HomeScreen({ navigation }) {
         animationType="slide"
         onRequestClose={claimReward}
       >
-        <Pressable style={styles.modalContent} onPress={claimReward}>
+        <Pressable
+          style={styles.modalContent}
+          onPress={() => {
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+            claimReward();
+          }}
+        >
           <View style={styles.modalBox}>
             <Text style={styles.modalText}>{pendingReward}</Text>
-            <Button title="Claim" onPress={claimReward} accessibilityLabel="Claim reward" />
+            <Button
+              title="Claim"
+              onPress={() => {
+                Haptics.notificationAsync(
+                  Haptics.NotificationFeedbackType.Success
+                );
+                claimReward();
+              }}
+              accessibilityLabel="Claim reward"
+            />
           </View>
         </Pressable>
       </Modal>

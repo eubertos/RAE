@@ -15,24 +15,37 @@ RAE is a gamified task management app built with React Native and Expo. It helps
    ```
 3. Run the Jest test suite (optional):
    ```sh
-   npm test --prefix app
-   ```
-   This launches the Expo dev server where you can run the app on iOS, Android or web.
+ npm test --prefix app
+  ```
+  This launches the Expo dev server where you can run the app on iOS, Android or web.
+
+4. Start the backend server (optional for login and file storage):
+  ```sh
+  cd server && npm install
+  npm start
+  ```
 
 ## Core Features
 
 - **Interactive tasks** with due dates, priority and subtasks.
+- **Interactive tasks** with due dates, priority and subtasks. Tasks are sorted by due date and overdue items appear in red.
 - **Progress tracking** and token rewards.
 - **Narrative unlocks** when hitting milestones.
 - **Profile screen** showing user stats, preferences and theme selection.
 - **Daily reminders** via push notifications.
+- **Mentor assistant** for chatting, spawning micro agents and uploading files.
+- **Simple backend server** for user login and message storage.
+- **Account screen** to register, log in and sync mentor messages.
 - **Performance monitoring** using React's `Profiler`.
 
 ## Navigation Flow
 
-1. **Home** – overview of progress, tokens and access to tasks or profile.
+Navigation uses a bottom tab bar:
+1. **Home** – overview of progress, tokens and access to other screens.
 2. **Tasks** – swipeable task list with quick actions to complete or postpone items.
-3. **Profile** – view stats, edit preferences, change theme, adjust reminders, export data and submit feedback.
+3. **Mentor** – chat with the assistant and manage micro agents.
+4. **Profile** – view stats, edit preferences, change theme, adjust reminders, export data and submit feedback.
+5. **Account** – register or log in to the backend server.
 
 ## Performance Logs
 
@@ -69,6 +82,7 @@ node scripts/feedbackReport.js feedback.json
 ```
 
 This creates `logs/feedback_report.txt` with counts per day and the date of the last submission.
+The script also exports a `generateReport` function for use in other tooling or tests.
 
 Plan a weekly check-in to review these reports along with performance logs from the console output.
 
