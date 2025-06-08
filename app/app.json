@@ -7,7 +7,8 @@
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/512b3607-66bc-400c-89f4-897304cf6b05"
     },
     "ios": {
       "supportsTablet": true,
@@ -24,6 +25,9 @@
       "eas": {
         "projectId": "512b3607-66bc-400c-89f4-897304cf6b05"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }
