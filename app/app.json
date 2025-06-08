@@ -10,11 +10,20 @@
       "fallbackToCacheTimeout": 0
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ethcook.app",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "edgeToEdgeEnabled": true
     },
-    "web": {}
+    "web": {},
+    "extra": {
+      "eas": {
+        "projectId": "512b3607-66bc-400c-89f4-897304cf6b05"
+      }
+    }
   }
 }
