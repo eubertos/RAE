@@ -6,7 +6,7 @@ RAE is a gamified task management app built with React Native and Expo. It helps
 
 1. Install dependencies:
    ```sh
-   cd app
+   cd RAE/app    # from repository parent directory
    npm install
    ```
 2. Start the development server:
@@ -43,7 +43,7 @@ Use these numbers to spot expensive renders during development. Lower times indi
 To create a build for beta testers, use Expo's build service:
 
 ```sh
-cd app
+cd RAE/app    # from repository parent directory
 npx expo login     # if not logged in
 npx expo build:android   # or build:ios
 ```
