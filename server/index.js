@@ -3,6 +3,10 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { OpenAI } = require('openai');
+const openai = process.env.OPENAI_API_KEY
+  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  : null;
 
 const app = express();
 app.use(express.json());
@@ -76,6 +80,24 @@ app.post('/messages', auth, (req, res) => {
   db.messages.push(msg);
   saveDb();
   res.json(msg);
+});
+
+app.post('/mentor', auth, async (req, res) => {
+  const { text } = req.body;
+  if (!text) return res.status(400).json({ error: 'No text' });
+  let reply = `You said: ${text}`;
+  if (openai) {
+    try {
+      const completion = await openai.chat.completions.create({
+        model: 'gpt-3.5-turbo',
+        messages: [{ role: 'user', content: text }],
+      });
+      reply = completion.choices[0].message.content.trim();
+    } catch (e) {
+      console.log('openai error', e);
+    }
+  }
+  res.json({ reply });
 });
 
 app.post('/files', auth, upload.single('file'), (req, res) => {

@@ -33,8 +33,8 @@ RAE is a gamified task management app built with React Native and Expo. It helps
 - **Narrative unlocks** when hitting milestones.
 - **Profile screen** showing user stats, preferences and theme selection.
 - **Daily reminders** via push notifications.
-- **Mentor assistant** for chatting, spawning micro agents and uploading files.
-- **Simple backend server** for user login and message storage.
+- **Mentor assistant** for chatting, spawning micro agents and uploading files. Messages are echoed by a simple LLM endpoint when logged in.
+- **Simple backend server** for user login and message storage. It exposes a `/mentor` endpoint that generates replies using OpenAI when an API key is provided.
 - **Account screen** to register, log in and sync mentor messages.
 - **Performance monitoring** using React's `Profiler`.
 

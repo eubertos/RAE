@@ -13,4 +13,12 @@ describe('server', () => {
     const res = await request(app).get('/profile').set('Authorization', token);
     expect(res.body.username).toBe('test');
   });
+
+  test('mentor echo', async () => {
+    const res = await request(app)
+      .post('/mentor')
+      .set('Authorization', token)
+      .send({ text: 'hello' });
+    expect(res.body.reply).toBeDefined();
+  });
 });

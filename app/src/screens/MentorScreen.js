@@ -36,7 +36,7 @@ export default function MentorScreen() {
     fetchMessages();
   }, [token]);
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
     sendMessage(input.trim());
     if (token) {
@@ -48,6 +48,21 @@ export default function MentorScreen() {
         },
         body: JSON.stringify({ text: input.trim() }),
       }).catch((e) => console.log('send failed', e));
+
+      try {
+        const res = await fetch('http://localhost:3001/mentor', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token,
+          },
+          body: JSON.stringify({ text: input.trim() }),
+        });
+        const data = await res.json();
+        if (data.reply) sendMessage(data.reply, 'mentor');
+      } catch (e) {
+        console.log('mentor error', e);
+      }
     }
     Haptics.selectionAsync();
     setInput('');
