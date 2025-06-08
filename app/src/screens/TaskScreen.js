@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import {
   View,
   Text,
@@ -10,13 +10,23 @@ import {
 import { Swipeable } from 'react-native-gesture-handler';
 import { RectButton } from 'react-native-gesture-handler';
 import { AppContext } from '../context/AppContext';
+import * as Haptics from 'expo-haptics';
 
 export default function TaskScreen() {
   const { tasks, toggleTask, postponeTask } = useContext(AppContext);
 
+  const sortedTasks = useMemo(
+    () =>
+      [...tasks].sort(
+        (a, b) => new Date(a.dueDate) - new Date(b.dueDate)
+      ),
+    [tasks]
+  );
+
   const handleToggle = (id, subId) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     toggleTask(id, subId);
+    Haptics.selectionAsync();
   };
 
   const renderLeft = (id) => (
@@ -32,7 +42,10 @@ export default function TaskScreen() {
   const renderRight = (id) => (
     <RectButton
       style={[styles.action, styles.postpone]}
-      onPress={() => postponeTask(id)}
+      onPress={() => {
+        postponeTask(id);
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+      }}
       accessibilityLabel="Postpone task"
     >
       <Text style={styles.actionText}>Postpone</Text>
@@ -42,7 +55,7 @@ export default function TaskScreen() {
   return (
     <View style={styles.container}>
       <FlatList
-        data={tasks}
+        data={sortedTasks}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <Swipeable
@@ -55,7 +68,15 @@ export default function TaskScreen() {
                 accessibilityRole="button"
                 accessibilityLabel={`Toggle ${item.name}`}
               >
-                <Text style={[styles.text, item.completed && styles.completed]}>
+                <Text
+                  style={[
+                    styles.text,
+                    item.completed && styles.completed,
+                    !item.completed &&
+                      new Date(item.dueDate) < new Date() &&
+                      styles.overdue,
+                  ]}
+                >
                   {item.name} ({item.assignedTo})
                 </Text>
                 <Text style={styles.meta}>
@@ -111,6 +132,9 @@ const styles = StyleSheet.create({
   completed: {
     textDecorationLine: 'line-through',
     color: 'gray',
+  },
+  overdue: {
+    color: 'red',
   },
   action: {
     justifyContent: 'center',

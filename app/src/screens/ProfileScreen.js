@@ -10,6 +10,7 @@ import {
   Linking,
 } from 'react-native';
 import { AppContext } from '../context/AppContext';
+import * as Haptics from 'expo-haptics';
 
 export default function ProfileScreen() {
   const {
@@ -97,7 +98,10 @@ export default function ProfileScreen() {
           <Pressable
             key={c}
             style={[styles.colorBox, { backgroundColor: c }, theme === c && styles.colorSelected]}
-            onPress={() => setTheme(c)}
+            onPress={() => {
+              setTheme(c);
+              Haptics.selectionAsync();
+            }}
             accessibilityRole="button"
             accessibilityLabel={`Select ${c} theme`}
           />
@@ -128,25 +132,60 @@ export default function ProfileScreen() {
           accessibilityLabel="Reminder frequency"
         />
       </View>
-      <Pressable style={styles.button} onPress={saveNotification} accessibilityRole="button" accessibilityLabel="Save reminder settings">
+      <Pressable
+        style={styles.button}
+        onPress={() => {
+          Haptics.selectionAsync();
+          saveNotification();
+        }}
+        accessibilityRole="button"
+        accessibilityLabel="Save reminder settings"
+      >
         <Text style={styles.buttonText}>Save Reminder</Text>
       </Pressable>
 
-      <Pressable style={styles.button} onPress={exportCSV} accessibilityRole="button" accessibilityLabel="Export data as CSV">
+      <Pressable
+        style={styles.button}
+        onPress={() => {
+          Haptics.selectionAsync();
+          exportCSV();
+        }}
+        accessibilityRole="button"
+        accessibilityLabel="Export data as CSV"
+      >
         <Text style={styles.buttonText}>Export CSV</Text>
       </Pressable>
-      <Pressable style={styles.button} onPress={exportJSON} accessibilityRole="button" accessibilityLabel="Export data as JSON">
+      <Pressable
+        style={styles.button}
+        onPress={() => {
+          Haptics.selectionAsync();
+          exportJSON();
+        }}
+        accessibilityRole="button"
+        accessibilityLabel="Export data as JSON"
+      >
         <Text style={styles.buttonText}>Export JSON</Text>
       </Pressable>
       <Pressable
         style={styles.button}
-        onPress={exportFeedbackLogs}
+        onPress={() => {
+          Haptics.selectionAsync();
+          exportFeedbackLogs();
+        }}
         accessibilityRole="button"
         accessibilityLabel="Export feedback logs"
       >
         <Text style={styles.buttonText}>Export Feedback</Text>
       </Pressable>
-      <Pressable style={styles.button} onPress={openFeedback} accessibilityRole="button" accessibilityLabel="Open feedback form">
+      <Pressable
+        style={styles.button}
+        onPress={() => {
+          Haptics.selectionAsync();
+          openFeedback();
+        }}
+        accessibilityRole="button"
+        accessibilityLabel="Open feedback form"
+      >
         <Text style={styles.buttonText}>Send Feedback</Text>
       </Pressable>
     </ScrollView>

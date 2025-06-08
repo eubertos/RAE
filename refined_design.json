@@ -1,0 +1,11 @@
+{
+  "colors": {
+    "background": "#0030ff",
+    "text": "#d0e0ff",
+    "primary": "#0050ff"
+  },
+  "whitespace": 0.25,
+  "fontSize": 16,
+  "lineHeight": 1.5,
+  "touchSize": 44
+}
