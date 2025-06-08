@@ -15,7 +15,7 @@ RAE is a gamified task management app built with React Native and Expo. It helps
    ```
 3. Run the Jest test suite (optional):
    ```sh
-   npm test --prefix app
+   npm test
    ```
    This launches the Expo dev server where you can run the app on iOS, Android or web.
 
@@ -50,6 +50,8 @@ Use [EAS Build](https://docs.expo.dev/build/introduction/) to create a distribut
 cd RAE/app    # from repository parent directory
 npx expo login        # if not logged in
 npx eas build --profile preview --platform android    # or --platform ios
+# Alternatively use the `internal` profile which is configured the same way:
+npx eas build --profile internal --platform android
 ```
 
 The `preview` profile produces an APK on Android that you can sideload directly. For iOS it generates an IPA for TestFlight or internal distribution. After the build completes, download the archive from the EAS website and install it on your device.
@@ -84,3 +86,21 @@ npx eas update --branch main --message "New update"
 
 Users will see an update prompt on next launch and can restart to apply it seamlessly.
 
+## Sync design tokens
+
+Run after modifying `/the-loop/specs/ui-colors.md`:
+
+```sh
+python3 scripts/spec_sync.py
+```
+This refreshes `app/design-tokens.json`.
+
+
+
+---
+
+## THE LOOP LLM Project Quickstart
+
+1. `docker compose up`
+2. LLM (Ollama) available on port `11434`, Gradio chat UI on port `7860`.
+3. All design and behavior is spec-driven from `/the-loop/`.

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, Button, Modal, ActivityIndicator, Pressable } from 'react-native';
+import { tokens as colorTokens } from '../../theme';
 import { AppContext } from '../context/AppContext';
 import { ProgressBar } from '../components/ProgressBar';
 
@@ -115,17 +116,17 @@ const styles = StyleSheet.create({
   milestone: {
     fontSize: 14,
     marginBottom: 10,
-    color: '#555',
+    color: colorTokens.text.muted,
   },
   modalContent: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: colorTokens.overlay.backdrop,
     padding: 20,
   },
   modalBox: {
-    backgroundColor: '#fff',
+    backgroundColor: colorTokens.bg.card,
     padding: 20,
     alignItems: 'center',
     width: '80%',

@@ -10,7 +10,8 @@
       "fallbackToCacheTimeout": 0
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ethcook.eub"
     },
     "android": {
       "edgeToEdgeEnabled": true

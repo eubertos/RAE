@@ -1,0 +1,18 @@
+name: Spec Guard
+on: [push, pull_request]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: pip install -U pyyaml
+      - name: Sync design tokens
+        run: python3 scripts/spec_sync.py
+      - name: Check for spec drift
+        run: |
+          git diff --exit-code || (echo "::error ::Specs and vars out of sync—run scripts/spec_sync.py and commit!"; exit 1)

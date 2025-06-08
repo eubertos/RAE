@@ -10,6 +10,7 @@ import {
 import { Swipeable } from 'react-native-gesture-handler';
 import { RectButton } from 'react-native-gesture-handler';
 import { AppContext } from '../context/AppContext';
+import { tokens as colorTokens } from '../../theme';
 
 export default function TaskScreen() {
   const { tasks, toggleTask, postponeTask } = useContext(AppContext);
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
   item: {
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    borderBottomColor: colorTokens.border.default,
   },
   subItem: {
     paddingLeft: 20,
@@ -106,11 +107,11 @@ const styles = StyleSheet.create({
   },
   meta: {
     fontSize: 12,
-    color: '#555',
+    color: colorTokens.text.muted,
   },
   completed: {
     textDecorationLine: 'line-through',
-    color: 'gray',
+    color: colorTokens.text.muted,
   },
   action: {
     justifyContent: 'center',
@@ -118,12 +119,12 @@ const styles = StyleSheet.create({
     width: 80,
   },
   actionText: {
-    color: '#fff',
+    color: colorTokens.text.primary,
   },
   done: {
-    backgroundColor: '#4caf50',
+    backgroundColor: colorTokens.accent.success,
   },
   postpone: {
-    backgroundColor: '#ff9800',
+    backgroundColor: colorTokens.accent.warning,
   },
 });

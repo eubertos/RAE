@@ -10,6 +10,7 @@ import {
   Linking,
 } from 'react-native';
 import { AppContext } from '../context/AppContext';
+import { tokens as colorTokens } from '../../theme';
 
 export default function ProfileScreen() {
   const {
@@ -93,7 +94,7 @@ export default function ProfileScreen() {
 
       <Text style={styles.sectionTitle}>Theme</Text>
       <View style={styles.themeRow}>
-        {['#4caf50', '#2196f3', '#ff9800'].map((c) => (
+        {[colorTokens.accent.success, colorTokens.accent.info, colorTokens.accent.warning].map((c) => (
           <Pressable
             key={c}
             style={[styles.colorBox, { backgroundColor: c }, theme === c && styles.colorSelected]}
@@ -173,7 +174,7 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: colorTokens.border.default,
     padding: 5,
     marginTop: 5,
   },
@@ -197,7 +198,7 @@ const styles = StyleSheet.create({
   },
   colorSelected: {
     borderWidth: 2,
-    borderColor: '#000',
+    borderColor: colorTokens.border.selected,
   },
   notifyRow: {
     flexDirection: 'row',
@@ -206,7 +207,7 @@ const styles = StyleSheet.create({
   },
   inputSmall: {
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: colorTokens.border.default,
     padding: 5,
     width: 40,
     textAlign: 'center',
@@ -218,10 +219,10 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 10,
     padding: 10,
-    backgroundColor: '#2196f3',
+    backgroundColor: colorTokens.accent.info,
   },
   buttonText: {
-    color: '#fff',
+    color: colorTokens.text.primary,
     textAlign: 'center',
   },
 });

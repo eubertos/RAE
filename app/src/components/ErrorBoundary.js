@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { tokens } from '../../theme';
 
 export class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -35,6 +36,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    color: 'red',
+    color: tokens.accent.warning,
   },
 });

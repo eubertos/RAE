@@ -1,0 +1,23 @@
+{
+  "bg": {
+    "primary": "#181820",
+    "card": "#FFFFFF"
+  },
+  "text": {
+    "primary": "#FFFFFF",
+    "muted": "#555555"
+  },
+  "accent": {
+    "signal": "#16FFC9",
+    "success": "#4CAF50",
+    "warning": "#FF9800",
+    "info": "#2196F3"
+  },
+  "border": {
+    "default": "#CCCCCC",
+    "selected": "#000000"
+  },
+  "overlay": {
+    "backdrop": "rgba(0,0,0,0.5)"
+  }
+}
