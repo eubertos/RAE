@@ -98,3 +98,7 @@ npx eas update --branch main --message "New update"
 
 Users will see an update prompt on next launch and can restart to apply it seamlessly.
 
+
+## UI Aesthetics Checklist
+
+The repository includes `docs/UI_Aesthetics_Criteria.md` describing deterministic metrics for visual quality. Use `node scripts/designRefinement.js design.json` to score and evolve a design file. The script writes `refined_design.json` with the highest scoring variant.
