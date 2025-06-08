@@ -42,17 +42,19 @@ Render RAE [mount/update] took 12.3ms
 ```
 Use these numbers to spot expensive renders during development. Lower times indicate better performance.
 
-## Building for Testing
+## Building for Testing and Sideloading
 
-To create a build for beta testers, use Expo's build service:
+Use [EAS Build](https://docs.expo.dev/build/introduction/) to create a distributable APK or IPA that can be installed on a device:
 
 ```sh
 cd RAE/app    # from repository parent directory
-npx expo login     # if not logged in
-npx expo build:android   # or build:ios
+npx expo login        # if not logged in
+npx eas build --profile preview --platform android    # or --platform ios
 ```
 
-Once complete, share the build link with testers or distribute via TestFlight/Play Store internal testing.
+The `preview` profile produces an APK on Android that you can sideload directly. For iOS it generates an IPA for TestFlight or internal distribution. After the build completes, download the archive from the EAS website and install it on your device.
+
+The project includes an `eas.json` file with this `preview` profile preconfigured.
 
 ## Beta Feedback
 
@@ -69,4 +71,16 @@ node scripts/feedbackReport.js feedback.json
 This creates `logs/feedback_report.txt` with counts per day and the date of the last submission.
 
 Plan a weekly check-in to review these reports along with performance logs from the console output.
+
+## Over-the-Air Updates
+
+The app checks for new versions each time it starts. When an update is available it downloads in the background and prompts you to restart. To publish an OTA update run:
+
+```sh
+cd RAE/app
+npx expo export --platform android,ios
+npx eas update --branch main --message "New update"
+```
+
+Users will see an update prompt on next launch and can restart to apply it seamlessly.
 
