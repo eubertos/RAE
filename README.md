@@ -56,7 +56,37 @@ npx eas build --profile internal --platform android
 
 The `preview` profile produces an APK on Android that you can sideload directly. For iOS it generates an IPA for TestFlight or internal distribution. After the build completes, download the archive from the EAS website and install it on your device.
 
+
 The project includes an `eas.json` file with this `preview` profile preconfigured.
+
+## Building for App Stores
+
+Follow these steps to produce a binary ready for Google Play or the App Store:
+
+1. Install the Expo build tool:
+   ```sh
+   npm install -g eas-cli
+   ```
+2. Log in to your Expo account:
+   ```sh
+   eas login
+   ```
+3. Configure the project (run once):
+   ```sh
+   cd RAE/app
+   eas build:configure
+   ```
+   If prompted, install the dev client with `npx expo install expo-dev-client`.
+4. Create the store build:
+   ```sh
+   eas build --platform ios    # or --platform android / --platform all
+   ```
+   The CLI handles signing credentials and generates an IPA or APK.
+5. Monitor progress:
+   ```sh
+   eas build:list
+   ```
+6. When complete, download the build from the EAS website and submit it to the store or install it on a device.
 
 ## Beta Feedback
 
