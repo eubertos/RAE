@@ -13,6 +13,10 @@ RAE is a gamified task management app built with React Native and Expo. It helps
    ```sh
    npm start
    ```
+3. Run the Jest test suite (optional):
+   ```sh
+   npm test --prefix app
+   ```
    This launches the Expo dev server where you can run the app on iOS, Android or web.
 
 ## Core Features
