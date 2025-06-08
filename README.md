@@ -56,6 +56,17 @@ npx eas build --profile internal --platform android
 
 The `preview` profile produces an APK on Android that you can sideload directly. For iOS it generates an IPA for TestFlight or internal distribution. After the build completes, download the archive from the EAS website and install it on your device.
 
+### Building for iOS without an Apple ID
+
+Apple requires signing with a developer account to install an IPA on a physical device. Without an Apple ID you can only run the iOS version in the Simulator. To do so on macOS with Xcode installed:
+
+```sh
+npx expo prebuild --platform ios   # generates the Xcode project
+npx expo run:ios                   # opens the Simulator and installs the app
+```
+
+You can skip Expo account sign-in for this workflow. It runs entirely locally and does not produce a signed IPA for distribution—use it solely for Simulator testing.
+
 
 The project includes an `eas.json` file with this `preview` profile preconfigured.
 
@@ -130,7 +141,16 @@ This refreshes `app/design-tokens.json`.
 ---
 
 ## THE LOOP LLM Project Quickstart
+Install Docker Desktop or a compatible Docker engine first. Then from the repo
+root run the following in your terminal (the VS Code integrated terminal works
+well):
 
-1. `docker compose up`
-2. LLM (Ollama) available on port `11434`, Gradio chat UI on port `7860`.
+```sh
+docker compose up
+```
+
+Once the images finish downloading:
+
+1. Ollama LLM runs on port `11434`.
+2. Gradio chat UI is available on port `7860`.
 3. All design and behavior is spec-driven from `/the-loop/`.
