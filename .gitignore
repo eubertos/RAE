@@ -4,3 +4,4 @@ server/node_modules/
 logs/
 server/uploads/
 server/db.json
+server/.env

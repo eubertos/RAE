@@ -1,15 +1,23 @@
+require('dotenv').config();
 const express = require('express');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const cors = require('cors');
 const { OpenAI } = require('openai');
+
 const openai = process.env.OPENAI_API_KEY
   ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
   : null;
 
 const app = express();
 app.use(express.json());
+app.use(cors());
+
+app.get('/', (req, res) => {
+  res.send('OpenAI Proxy Backend is running!');
+});
 
 const storageDir = path.join(__dirname, 'uploads');
 const upload = multer({ dest: storageDir });
@@ -93,8 +101,17 @@ app.post('/mentor', auth, async (req, res) => {
         messages: [{ role: 'user', content: text }],
       });
       reply = completion.choices[0].message.content.trim();
-    } catch (e) {
-      console.log('openai error', e);
+    } catch (error) {
+      console.log('openai error', error);
+      if (error.response) {
+        return res.status(error.response.status).json({
+          error: `OpenAI API Error: ${error.response.status}`,
+          details: error.response.data,
+        });
+      }
+      return res.status(500).json({
+        error: 'No response received from OpenAI API',
+      });
     }
   }
   res.json({ reply });

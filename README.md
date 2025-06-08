@@ -22,6 +22,7 @@ RAE is a gamified task management app built with React Native and Expo. It helps
 4. Start the backend server (optional for login and file storage):
   ```sh
   cd server && npm install
+  cp .env.example .env # add your OpenAI key
   npm start
   ```
 
@@ -34,7 +35,7 @@ RAE is a gamified task management app built with React Native and Expo. It helps
 - **Profile screen** showing user stats, preferences and theme selection.
 - **Daily reminders** via push notifications.
 - **Mentor assistant** for chatting, spawning micro agents and uploading files. Messages are echoed by a simple LLM endpoint when logged in.
-- **Simple backend server** for user login and message storage. It exposes a `/mentor` endpoint that generates replies using OpenAI when an API key is provided.
+- **Simple backend server** for user login and message storage. It exposes a `/mentor` endpoint that generates replies using OpenAI. Provide your API key in `server/.env`.
 - **Account screen** to register, log in and sync mentor messages.
 - **Performance monitoring** using React's `Profiler`.
 
