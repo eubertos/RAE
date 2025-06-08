@@ -86,3 +86,11 @@ npx eas update --branch main --message "New update"
 
 Users will see an update prompt on next launch and can restart to apply it seamlessly.
 
+
+---
+
+## THE LOOP LLM Project Quickstart
+
+1. `docker compose up`
+2. LLM (Ollama) available on port `11434`, Gradio chat UI on port `7860`.
+3. All design and behavior is spec-driven from `/the-loop/`.

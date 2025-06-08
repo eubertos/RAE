@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  llm:
+    image: ollama/ollama:latest
+    ports: ["11434:11434"]
+    volumes: [ollama-data:/root/.ollama]
+  chat:
+    image: python:3.11-slim
+    command: sh -c "pip install gradio && python -m gradio"
+    ports: ["7860:7860"]
+    depends_on: [llm]
+volumes:
+  ollama-data:
