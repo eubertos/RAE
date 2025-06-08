@@ -7,7 +7,9 @@ import * as Updates from 'expo-updates';
 import HomeScreen from './src/screens/HomeScreen';
 import TaskScreen from './src/screens/TaskScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
+import MentorScreen from './src/screens/MentorScreen';
 import { AppProvider } from './src/context/AppContext';
+import { MentorProvider } from './src/context/MentorContext';
 import { ErrorBoundary } from './src/components/ErrorBoundary';
 import { PerformanceMonitor } from './src/components/PerformanceMonitor';
 
@@ -39,17 +41,20 @@ export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <AppProvider>
-        <ErrorBoundary>
-          <PerformanceMonitor>
-            <NavigationContainer>
-              <Stack.Navigator>
-                <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="Tasks" component={TaskScreen} />
-                <Stack.Screen name="Profile" component={ProfileScreen} />
-              </Stack.Navigator>
-            </NavigationContainer>
-          </PerformanceMonitor>
-        </ErrorBoundary>
+        <MentorProvider>
+          <ErrorBoundary>
+            <PerformanceMonitor>
+              <NavigationContainer>
+                <Stack.Navigator>
+                  <Stack.Screen name="Home" component={HomeScreen} />
+                  <Stack.Screen name="Tasks" component={TaskScreen} />
+                  <Stack.Screen name="Mentor" component={MentorScreen} />
+                  <Stack.Screen name="Profile" component={ProfileScreen} />
+                </Stack.Navigator>
+              </NavigationContainer>
+            </PerformanceMonitor>
+          </ErrorBoundary>
+        </MentorProvider>
       </AppProvider>
       {updating && (
         <View style={styles.overlay} pointerEvents="box-none">

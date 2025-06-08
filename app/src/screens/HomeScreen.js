@@ -52,6 +52,11 @@ export default function HomeScreen({ navigation }) {
         accessibilityLabel="Go to tasks"
       />
       <Button
+        title="Mentor"
+        onPress={() => navigation.navigate('Mentor')}
+        accessibilityLabel="Open Mentor assistant"
+      />
+      <Button
         title="Profile"
         onPress={() => navigation.navigate('Profile')}
         accessibilityLabel="Open profile screen"
