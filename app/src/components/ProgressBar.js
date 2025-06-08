@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import { View, StyleSheet, Animated } from 'react-native';
+import { tokens } from '../../theme';
 
-const ProgressBarBase = ({ progress, color = '#4caf50' }) => {
+const ProgressBarBase = ({ progress, color = tokens.accent.success }) => {
   const anim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
   bar: {
     width: '100%',
     height: 10,
-    backgroundColor: '#ddd',
+    backgroundColor: tokens.border.default,
     borderRadius: 5,
     overflow: 'hidden',
   },

@@ -3,6 +3,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, ActivityIndicator, Text, StyleSheet, Alert } from 'react-native';
+import { tokens } from './theme';
 import * as Updates from 'expo-updates';
 import HomeScreen from './src/screens/HomeScreen';
 import TaskScreen from './src/screens/TaskScreen';
@@ -54,7 +55,7 @@ export default function App() {
       {updating && (
         <View style={styles.overlay} pointerEvents="box-none">
           <View style={styles.overlayBox}>
-            <ActivityIndicator color="#fff" size="large" />
+            <ActivityIndicator color={tokens.text.primary} size="large" />
             <Text style={styles.overlayText}>Applying update...</Text>
           </View>
         </View>
@@ -68,15 +69,15 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: tokens.overlay.backdrop,
   },
   overlayBox: {
     padding: 20,
-    backgroundColor: '#333',
+    backgroundColor: tokens.bg.primary,
     borderRadius: 8,
   },
   overlayText: {
-    color: '#fff',
+    color: tokens.text.primary,
     marginTop: 10,
   },
 });

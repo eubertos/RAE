@@ -2,6 +2,7 @@
 import os, json
 SRC = 'the-loop/specs/ui-colors.md'
 DST = 'the-loop/vars/design-tokens.json'
+APP_DST = 'app/design-tokens.json'
 
 def parse_table(md_text):
     lines = [l for l in md_text.splitlines() if l.strip().startswith('|')]
@@ -27,9 +28,10 @@ def main():
         for part in kmain[:-1]:
             d = d.setdefault(part, {})
         d[kmain[-1]] = v['default']
-    with open(DST, 'w') as f:
-        json.dump(out, f, indent=2)
-    print(f"Wrote {DST}")
+    for path in (DST, APP_DST):
+        with open(path, 'w') as f:
+            json.dump(out, f, indent=2)
+        print(f"Wrote {path}")
 
 if __name__ == '__main__':
     main()

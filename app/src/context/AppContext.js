@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
+import { tokens as designTokens } from '../../theme';
 
 const initialTasks = [
   {
@@ -79,7 +80,7 @@ export const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [analytics, setAnalytics] = useState(initialAnalytics);
-  const [theme, setTheme] = useState('#4caf50');
+  const [theme, setTheme] = useState(designTokens.accent.success);
   const [feedbackLogs, setFeedbackLogs] = useState([]);
   const [notificationSettings, setNotificationSettings] = useState(
     initialNotificationSettings

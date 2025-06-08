@@ -86,6 +86,16 @@ npx eas update --branch main --message "New update"
 
 Users will see an update prompt on next launch and can restart to apply it seamlessly.
 
+## Sync design tokens
+
+Run after modifying `/the-loop/specs/ui-colors.md`:
+
+```sh
+python3 scripts/spec_sync.py
+```
+This refreshes `app/design-tokens.json`.
+
+
 
 ---
 
