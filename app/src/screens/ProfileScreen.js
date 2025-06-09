@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   TextInput,
+  Switch,
   Pressable,
   Share,
   Linking,
@@ -25,6 +26,8 @@ export default function ProfileScreen() {
     updateNotificationSettings,
     feedbackLogs,
     logFeedback,
+    animationEnabled,
+    setAnimationEnabled,
   } = useContext(AppContext);
 
   const [hour, setHour] = useState(notificationSettings.hour.toString());
@@ -90,6 +93,13 @@ export default function ProfileScreen() {
           </Text>
         )}
       </View>
+
+      <Text style={styles.sectionTitle}>Background Animation</Text>
+      <Switch
+        value={animationEnabled}
+        onValueChange={setAnimationEnabled}
+        accessibilityLabel="Toggle background animation"
+      />
 
       <Text style={styles.sectionTitle}>Theme</Text>
       <View style={styles.themeRow}>
