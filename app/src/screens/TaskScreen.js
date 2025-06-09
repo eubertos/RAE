@@ -12,7 +12,7 @@ import { RectButton } from 'react-native-gesture-handler';
 import { AppContext } from '../context/AppContext';
 
 export default function TaskScreen() {
-  const { tasks, toggleTask, postponeTask } = useContext(AppContext);
+  const { tasks, toggleTask, postponeTask, palette } = useContext(AppContext);
 
   const handleToggle = (id, subId) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -40,7 +40,7 @@ export default function TaskScreen() {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: palette.background }]}>
       <FlatList
         data={tasks}
         keyExtractor={(item) => item.id.toString()}
@@ -55,10 +55,10 @@ export default function TaskScreen() {
                 accessibilityRole="button"
                 accessibilityLabel={`Toggle ${item.name}`}
               >
-                <Text style={[styles.text, item.completed && styles.completed]}>
+                <Text style={[styles.text, { color: palette.text }, item.completed && styles.completed]}>
                   {item.name} ({item.assignedTo})
                 </Text>
-                <Text style={styles.meta}>
+                <Text style={[styles.meta, { color: palette.text }]}> 
                   Due: {item.dueDate} | Priority: {item.priority}
                 </Text>
               </Pressable>
@@ -71,7 +71,7 @@ export default function TaskScreen() {
                   accessibilityLabel={`Toggle ${sub.name}`}
                 >
                   <Text
-                    style={[styles.subText, sub.completed && styles.completed]}
+                    style={[styles.subText, { color: palette.text }, sub.completed && styles.completed]}
                   >
                     - {sub.name}
                   </Text>
@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
   },
   meta: {
     fontSize: 12,
-    color: '#555',
   },
   completed: {
     textDecorationLine: 'line-through',
