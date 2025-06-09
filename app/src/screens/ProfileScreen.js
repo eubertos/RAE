@@ -8,6 +8,7 @@ import {
   Pressable,
   Share,
   Linking,
+  Switch,
 } from 'react-native';
 import { AppContext } from '../context/AppContext';
 
@@ -19,6 +20,9 @@ export default function ProfileScreen() {
     updatePreference,
     setTheme,
     theme,
+    themeMode,
+    setThemeMode,
+    palette,
     analytics,
     tasks,
     notificationSettings,
@@ -62,14 +66,14 @@ export default function ProfileScreen() {
     Linking.openURL('https://example.com/feedback');
   };
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Profile</Text>
-      <Text>Tokens: {tokens}</Text>
-      <Text>Progress: {(progress * 100).toFixed(0)}%</Text>
+    <ScrollView contentContainerStyle={[styles.container, { backgroundColor: palette.background }]}>
+      <Text style={[styles.title, { color: palette.text }]}>Profile</Text>
+      <Text style={{ color: palette.text }}>Tokens: {tokens}</Text>
+      <Text style={{ color: palette.text }}>Progress: {(progress * 100).toFixed(0)}%</Text>
       {users.map((u) => (
         <View key={u.name} style={styles.userSection}>
-          <Text style={styles.userName}>{u.name}</Text>
-          <Text>Completed: {u.tasksCompleted}</Text>
+          <Text style={[styles.userName, { color: palette.text }]}>{u.name}</Text>
+          <Text style={{ color: palette.text }}>Completed: {u.tasksCompleted}</Text>
           <TextInput
             style={styles.input}
             placeholder="Preference"
@@ -80,18 +84,24 @@ export default function ProfileScreen() {
       ))}
 
       <View style={styles.analytics}>
-        <Text>All-time tasks completed: {analytics.tasksCompleted}</Text>
-        <Text>Rewards claimed: {analytics.rewardsClaimed}</Text>
-        <Text>Feedback submissions: {feedbackLogs.length}</Text>
+        <Text style={{ color: palette.text }}>
+          All-time tasks completed: {analytics.tasksCompleted}
+        </Text>
+        <Text style={{ color: palette.text }}>
+          Rewards claimed: {analytics.rewardsClaimed}
+        </Text>
+        <Text style={{ color: palette.text }}>
+          Feedback submissions: {feedbackLogs.length}
+        </Text>
         {feedbackLogs.length > 0 && (
-          <Text>
-            Last feedback:{' '}
+          <Text style={{ color: palette.text }}>
+            Last feedback{' '}
             {new Date(feedbackLogs[feedbackLogs.length - 1]).toLocaleDateString()}
           </Text>
         )}
       </View>
 
-      <Text style={styles.sectionTitle}>Theme</Text>
+      <Text style={[styles.sectionTitle, { color: palette.text }]}>Theme</Text>
       <View style={styles.themeRow}>
         {['#4caf50', '#2196f3', '#ff9800'].map((c) => (
           <Pressable
@@ -103,8 +113,16 @@ export default function ProfileScreen() {
           />
         ))}
       </View>
+      <View style={styles.toggleRow}>
+        <Text style={[styles.toggleLabel, { color: palette.text }]}>Dark Mode</Text>
+        <Switch
+          value={themeMode === 'dark'}
+          onValueChange={() => setThemeMode(themeMode === 'light' ? 'dark' : 'light')}
+          accessibilityLabel="Toggle dark mode"
+        />
+      </View>
 
-      <Text style={styles.sectionTitle}>Daily Reminder</Text>
+      <Text style={[styles.sectionTitle, { color: palette.text }]}>Daily Reminder</Text>
       <View style={styles.notifyRow}>
         <TextInput
           style={styles.inputSmall}
@@ -113,7 +131,7 @@ export default function ProfileScreen() {
           onChangeText={setHour}
           accessibilityLabel="Reminder hour"
         />
-        <Text style={styles.colon}>:</Text>
+        <Text style={[styles.colon, { color: palette.text }]}>:</Text>
         <TextInput
           style={styles.inputSmall}
           value={minute}
@@ -128,25 +146,45 @@ export default function ProfileScreen() {
           accessibilityLabel="Reminder frequency"
         />
       </View>
-      <Pressable style={styles.button} onPress={saveNotification} accessibilityRole="button" accessibilityLabel="Save reminder settings">
+      <Pressable
+        style={[styles.button, { backgroundColor: palette.button }]}
+        onPress={saveNotification}
+        accessibilityRole="button"
+        accessibilityLabel="Save reminder settings"
+      >
         <Text style={styles.buttonText}>Save Reminder</Text>
       </Pressable>
 
-      <Pressable style={styles.button} onPress={exportCSV} accessibilityRole="button" accessibilityLabel="Export data as CSV">
+      <Pressable
+        style={[styles.button, { backgroundColor: palette.button }]}
+        onPress={exportCSV}
+        accessibilityRole="button"
+        accessibilityLabel="Export data as CSV"
+      >
         <Text style={styles.buttonText}>Export CSV</Text>
       </Pressable>
-      <Pressable style={styles.button} onPress={exportJSON} accessibilityRole="button" accessibilityLabel="Export data as JSON">
+      <Pressable
+        style={[styles.button, { backgroundColor: palette.button }]}
+        onPress={exportJSON}
+        accessibilityRole="button"
+        accessibilityLabel="Export data as JSON"
+      >
         <Text style={styles.buttonText}>Export JSON</Text>
       </Pressable>
       <Pressable
-        style={styles.button}
+        style={[styles.button, { backgroundColor: palette.button }]}
         onPress={exportFeedbackLogs}
         accessibilityRole="button"
         accessibilityLabel="Export feedback logs"
       >
         <Text style={styles.buttonText}>Export Feedback</Text>
       </Pressable>
-      <Pressable style={styles.button} onPress={openFeedback} accessibilityRole="button" accessibilityLabel="Open feedback form">
+      <Pressable
+        style={[styles.button, { backgroundColor: palette.button }]}
+        onPress={openFeedback}
+        accessibilityRole="button"
+        accessibilityLabel="Open feedback form"
+      >
         <Text style={styles.buttonText}>Send Feedback</Text>
       </Pressable>
     </ScrollView>
@@ -218,7 +256,6 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 10,
     padding: 10,
-    backgroundColor: '#2196f3',
   },
   buttonText: {
     color: '#fff',

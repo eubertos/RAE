@@ -2,6 +2,19 @@ import React, { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 
+const palettes = {
+  light: {
+    background: '#ffffff',
+    text: '#000000',
+    button: '#2196f3',
+  },
+  dark: {
+    background: '#121212',
+    text: '#ffffff',
+    button: '#bb86fc',
+  },
+};
+
 const initialTasks = [
   {
     id: 1,
@@ -80,7 +93,9 @@ export const AppProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [analytics, setAnalytics] = useState(initialAnalytics);
   const [theme, setTheme] = useState('#4caf50');
+  const [themeMode, setThemeMode] = useState('light');
   const [feedbackLogs, setFeedbackLogs] = useState([]);
+  const palette = palettes[themeMode];
   const [notificationSettings, setNotificationSettings] = useState(
     initialNotificationSettings
   );
@@ -95,11 +110,13 @@ export const AppProvider = ({ children }) => {
         const storedTasks = await AsyncStorage.getItem('tasks');
         const storedAnalytics = await AsyncStorage.getItem('analytics');
         const storedTheme = await AsyncStorage.getItem('theme');
+        const storedMode = await AsyncStorage.getItem('themeMode');
         const storedNotify = await AsyncStorage.getItem('notify');
         const storedFeedback = await AsyncStorage.getItem('feedbackLogs');
         if (storedTasks) setTasks(JSON.parse(storedTasks));
         if (storedAnalytics) setAnalytics(JSON.parse(storedAnalytics));
         if (storedTheme) setTheme(storedTheme);
+        if (storedMode) setThemeMode(storedMode);
         if (storedNotify) setNotificationSettings(JSON.parse(storedNotify));
         if (storedFeedback) setFeedbackLogs(JSON.parse(storedFeedback));
       } catch (e) {
@@ -117,6 +134,7 @@ export const AppProvider = ({ children }) => {
         await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
         await AsyncStorage.setItem('analytics', JSON.stringify(analytics));
         await AsyncStorage.setItem('theme', theme);
+        await AsyncStorage.setItem('themeMode', themeMode);
         await AsyncStorage.setItem('notify', JSON.stringify(notificationSettings));
         await AsyncStorage.setItem('feedbackLogs', JSON.stringify(feedbackLogs));
       } catch (e) {
@@ -124,7 +142,15 @@ export const AppProvider = ({ children }) => {
       }
     };
     if (!loading) save();
-  }, [tasks, analytics, theme, notificationSettings, feedbackLogs, loading]);
+  }, [
+    tasks,
+    analytics,
+    theme,
+    themeMode,
+    notificationSettings,
+    feedbackLogs,
+    loading,
+  ]);
 
   const updatePreference = (name, preference) => {
     setUsers((prev) =>
@@ -263,6 +289,9 @@ export const AppProvider = ({ children }) => {
         error,
         theme,
         setTheme,
+        themeMode,
+        setThemeMode,
+        palette,
         analytics,
         feedbackLogs,
         notificationSettings,
