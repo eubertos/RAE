@@ -97,11 +97,13 @@ export const AppProvider = ({ children }) => {
         const storedTheme = await AsyncStorage.getItem('theme');
         const storedNotify = await AsyncStorage.getItem('notify');
         const storedFeedback = await AsyncStorage.getItem('feedbackLogs');
+        const storedTokens = await AsyncStorage.getItem('tokens');
         if (storedTasks) setTasks(JSON.parse(storedTasks));
         if (storedAnalytics) setAnalytics(JSON.parse(storedAnalytics));
         if (storedTheme) setTheme(storedTheme);
         if (storedNotify) setNotificationSettings(JSON.parse(storedNotify));
         if (storedFeedback) setFeedbackLogs(JSON.parse(storedFeedback));
+        if (storedTokens) setTokens(JSON.parse(storedTokens));
       } catch (e) {
         setError('Failed to load data');
       } finally {
@@ -119,12 +121,13 @@ export const AppProvider = ({ children }) => {
         await AsyncStorage.setItem('theme', theme);
         await AsyncStorage.setItem('notify', JSON.stringify(notificationSettings));
         await AsyncStorage.setItem('feedbackLogs', JSON.stringify(feedbackLogs));
+        await AsyncStorage.setItem('tokens', JSON.stringify(tokens));
       } catch (e) {
         setError('Failed to save data');
       }
     };
     if (!loading) save();
-  }, [tasks, analytics, theme, notificationSettings, feedbackLogs, loading]);
+  }, [tasks, analytics, theme, notificationSettings, feedbackLogs, tokens, loading]);
 
   const updatePreference = (name, preference) => {
     setUsers((prev) =>
