@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet, Button, Modal, ActivityIndicator, Pressable } from 'react-native';
 import { AppContext } from '../context/AppContext';
 import { ProgressBar } from '../components/ProgressBar';
+import BackgroundAnimation from '../components/BackgroundAnimation';
 
 export default function HomeScreen({ navigation }) {
   const {
@@ -38,6 +39,7 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <BackgroundAnimation />
       <Text style={styles.title}>Resident's Adventure Engine</Text>
       <ProgressBar progress={progress} color={theme} />
       <Text style={styles.tokens}>Tokens: {tokens}</Text>

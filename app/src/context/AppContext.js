@@ -84,6 +84,7 @@ export const AppProvider = ({ children }) => {
   const [notificationSettings, setNotificationSettings] = useState(
     initialNotificationSettings
   );
+  const [animationEnabled, setAnimationEnabled] = useState(true);
   const claimReward = () => {
     setPendingReward(null);
     setAnalytics((a) => ({ ...a, rewardsClaimed: a.rewardsClaimed + 1 }));
@@ -97,11 +98,14 @@ export const AppProvider = ({ children }) => {
         const storedTheme = await AsyncStorage.getItem('theme');
         const storedNotify = await AsyncStorage.getItem('notify');
         const storedFeedback = await AsyncStorage.getItem('feedbackLogs');
+        const storedAnimation = await AsyncStorage.getItem('animation');
         if (storedTasks) setTasks(JSON.parse(storedTasks));
         if (storedAnalytics) setAnalytics(JSON.parse(storedAnalytics));
         if (storedTheme) setTheme(storedTheme);
         if (storedNotify) setNotificationSettings(JSON.parse(storedNotify));
         if (storedFeedback) setFeedbackLogs(JSON.parse(storedFeedback));
+        if (storedAnimation !== null)
+          setAnimationEnabled(storedAnimation === 'true');
       } catch (e) {
         setError('Failed to load data');
       } finally {
@@ -119,12 +123,21 @@ export const AppProvider = ({ children }) => {
         await AsyncStorage.setItem('theme', theme);
         await AsyncStorage.setItem('notify', JSON.stringify(notificationSettings));
         await AsyncStorage.setItem('feedbackLogs', JSON.stringify(feedbackLogs));
+        await AsyncStorage.setItem('animation', animationEnabled.toString());
       } catch (e) {
         setError('Failed to save data');
       }
     };
     if (!loading) save();
-  }, [tasks, analytics, theme, notificationSettings, feedbackLogs, loading]);
+  }, [
+    tasks,
+    analytics,
+    theme,
+    notificationSettings,
+    feedbackLogs,
+    animationEnabled,
+    loading,
+  ]);
 
   const updatePreference = (name, preference) => {
     setUsers((prev) =>
@@ -268,6 +281,8 @@ export const AppProvider = ({ children }) => {
         notificationSettings,
         updateNotificationSettings,
         logFeedback,
+        animationEnabled,
+        setAnimationEnabled,
       }}
     >
       {children}
