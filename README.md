@@ -9,3 +9,7 @@
     "test": "npm test"
   }
 }
+
+## LLM Setup
+
+Set your OpenAI API key in `app/app.json` under `expo.extra.openAiApiKey`.
