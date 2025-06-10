@@ -1,6 +1,16 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TextInput, Button, FlatList, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  FlatList,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import { AppContext } from '../context/AppContext';
+import { chat as chatLLM } from '../api/openai';
 
 export default function ChatScreen() {
   const { theme } = useContext(AppContext);
@@ -15,13 +25,12 @@ export default function ChatScreen() {
     setInput('');
     try {
       setLoading(true);
-      const res = await fetch('https://example.com/api/llm', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: userMsg.text }),
-      });
-      const data = await res.json();
-      const botMsg = { id: Date.now().toString() + '-bot', from: 'bot', text: data.text || 'No response' };
+      const botText = await chatLLM(userMsg.text);
+      const botMsg = {
+        id: Date.now().toString() + '-bot',
+        from: 'bot',
+        text: botText,
+      };
       setMessages((m) => [...m, botMsg]);
     } catch (e) {
       const errMsg = { id: Date.now().toString() + '-err', from: 'bot', text: 'Error: ' + e.message };
