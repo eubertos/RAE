@@ -7,6 +7,7 @@ import * as Updates from 'expo-updates';
 import HomeScreen from './src/screens/HomeScreen';
 import TaskScreen from './src/screens/TaskScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
+import ChatScreen from './src/screens/ChatScreen';
 import { AppProvider } from './src/context/AppContext';
 import { ErrorBoundary } from './src/components/ErrorBoundary';
 import { PerformanceMonitor } from './src/components/PerformanceMonitor';
@@ -46,6 +47,7 @@ export default function App() {
                 <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="Tasks" component={TaskScreen} />
                 <Stack.Screen name="Profile" component={ProfileScreen} />
+                <Stack.Screen name="Chat" component={ChatScreen} />
               </Stack.Navigator>
             </NavigationContainer>
           </PerformanceMonitor>

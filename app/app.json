@@ -24,7 +24,8 @@
     "extra": {
       "eas": {
         "projectId": "512b3607-66bc-400c-89f4-897304cf6b05"
-      }
+      },
+      "openAiApiKey": "YOUR_API_KEY_HERE"
     },
     "runtimeVersion": {
       "policy": "appVersion"
