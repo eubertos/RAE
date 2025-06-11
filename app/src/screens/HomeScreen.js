@@ -56,6 +56,11 @@ export default function HomeScreen({ navigation }) {
         onPress={() => navigation.navigate('Profile')}
         accessibilityLabel="Open profile screen"
       />
+      <Button
+        title="Chat"
+        onPress={() => navigation.navigate('Chat')}
+        accessibilityLabel="Open chat screen"
+      />
 
       <Modal
         visible={!!pendingReward}
